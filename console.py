@@ -113,42 +113,43 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-
-
-
-
-
-
     def create_attrs(self, obj, class_, new_id, params):
+        """
+            Aids the do_create method in creating new objects
+            with pre-set attributes
+        """
         for par in params:
             if '=' not in par:
                 continue
             idx = par.index('=')
             key = par[:idx]
             value = par[idx+1:]
-            if value[0] == '"' and value[len(value) - 1] == '"':
-                value = value[1:len(value) - 1]
+            if not value:
+                continue
+            if value[0] == '"' and value[-1] == '"':
+                value = value[1:-1]
                 value = value.replace('_', ' ')
-                if '\\' in value:
-                    idx = value.index('\\')
-                    #value = value[:idx] + value[idx + 1:]
-                    value = "hello\"world"
-                #self.do_update(class_ + ' ' +  new_id + ' ' + key + ' ' + value)
-                #obj.__dict__[key] = value
+                if '"' in value:
+                    skip = False
+                    for i in range(len(value)):
+                        if value[i] == '"' and value[i - 1] != '\\':
+                            skip = True
+                            break
+                    if skip:
+                        continue
                 setattr(obj, key, value)
             elif '.' in value:
-                value = float(value)
-                obj.__dict__[key] = value
+                try:
+                    value = float(value)
+                    obj.__dict__[key] = value
+                except Exception:
+                    continue
             else:
-                value = int(value)
-                obj.__dict__[key] = value
-
-
-
-
-
-
-
+                try:
+                    value = int(value)
+                    obj.__dict__[key] = value
+                except Exception:
+                    continue
 
     def do_create(self, args):
         """ Create an object of any class"""
@@ -160,11 +161,8 @@ class HBNBCommand(cmd.Cmd):
             params = args.split(' ')
             class_ = params[0]
             params = params[1:]
-            #attrs = self.get_attrs(params[1:])
         else:
             class_ = args
-
-
 
         if class_ not in HBNBCommand.classes:
             print("** class doesn't exist **")
@@ -178,15 +176,11 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         storage.save()
 
-
-
-
-
-
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
+        print("USAGE: create <className>")
+        print("USAGE: create <className> [<attr=value> <attr=value>...]\n")
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -376,6 +370,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
