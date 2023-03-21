@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -113,18 +113,75 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+
+
+
+
+
+
+    def create_attrs(self, obj, class_, new_id, params):
+        for par in params:
+            if '=' not in par:
+                continue
+            idx = par.index('=')
+            key = par[:idx]
+            value = par[idx+1:]
+            if value[0] == '"' and value[len(value) - 1] == '"':
+                value = value[1:len(value) - 1]
+                value = value.replace('_', ' ')
+                if '\\' in value:
+                    idx = value.index('\\')
+                    #value = value[:idx] + value[idx + 1:]
+                    value = "hello\"world"
+                #self.do_update(class_ + ' ' +  new_id + ' ' + key + ' ' + value)
+                #obj.__dict__[key] = value
+                setattr(obj, key, value)
+            elif '.' in value:
+                value = float(value)
+                obj.__dict__[key] = value
+            else:
+                value = int(value)
+                obj.__dict__[key] = value
+
+
+
+
+
+
+
+
     def do_create(self, args):
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        params = None
+        if ' ' in args:
+            params = args.split(' ')
+            class_ = params[0]
+            params = params[1:]
+            #attrs = self.get_attrs(params[1:])
+        else:
+            class_ = args
+
+
+
+        if class_ not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[class_]()
+
+        if params:
+            self.create_attrs(new_instance, class_, new_instance.id, params)
+
         storage.save()
         print(new_instance.id)
         storage.save()
+
+
+
+
+
 
     def help_create(self):
         """ Help information for the create method """
@@ -272,7 +329,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -280,10 +337,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
