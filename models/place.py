@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
+
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', ForeignKey('places.id')),
+                      Column('amenity_id', ForeignKey('amenities.id'))
+                      )
 
 
 class Place(BaseModel, Base):
@@ -21,6 +26,8 @@ class Place(BaseModel, Base):
         latitude = Column(Float)
         longitude = Column(Float)
         reviews = relationship('Review', backref='place', cascade='delete')
+        amenities = relationship('Amenity', back_populates='place_amenities',
+                                 viewonly=False, secondary=place_amenity)
     else:
         city_id = ""
         user_id = ""
@@ -44,3 +51,17 @@ class Place(BaseModel, Base):
             from models.review import Review
             reviews = storage.all(Review)
             return [obj for obj in reviews.values() if obj.place_id == self.id]
+
+        @property
+        def amenities(self):
+            """Getter method for amenities associated with current object"""
+            from models import storage
+            from models.amenity import Amenity
+            objs = storage.all(Amenity).values()
+            return [obj for obj in objs if obj.id in self.amenity_ids]
+
+        @amenity.setter
+        def amenities(self, obj):
+            """Setter method for amenity_ids attribute"""
+            if type(obj).__name__ == 'Amenity':
+                self.amenity_ids.append(obj.id)
