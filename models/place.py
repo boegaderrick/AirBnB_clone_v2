@@ -5,10 +5,11 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 
-place_amenity = Table('place_amenity', Base.metadata,
-                      Column('place_id', ForeignKey('places.id')),
-                      Column('amenity_id', ForeignKey('amenities.id'))
-                      )
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', ForeignKey('places.id')),
+                          Column('amenity_id', ForeignKey('amenities.id'))
+                          )
 
 
 class Place(BaseModel, Base):
@@ -60,7 +61,7 @@ class Place(BaseModel, Base):
             objs = storage.all(Amenity).values()
             return [obj for obj in objs if obj.id in self.amenity_ids]
 
-        @amenity.setter
+        @amenities.setter
         def amenities(self, obj):
             """Setter method for amenity_ids attribute"""
             if type(obj).__name__ == 'Amenity':
