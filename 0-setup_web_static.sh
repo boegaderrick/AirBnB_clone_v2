@@ -28,17 +28,17 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
 
 #Server block definition
-server="server {\
-        \n\tlisten localhost:80;\
-        \n\tserver_name boegaderrick.tech;\
+#server="server {\
+#        \n\tlisten localhost:80;\
+#        \n\tserver_name boegaderrick.tech;\
+#
+#        \n\n\tlocation /hbnb_static {\
+#                \n\t\talias /data/web_static/current/;\
+#                \n\t\ttry_files \$uri \$uri/ =404;\
+#        \n\t}\
+#\n}"
+#echo -e "$server" > boegaderrick.tech.conf
+#sudo mv boegaderrick.tech.conf /etc/nginx/conf.d/
 
-        \n\n\tlocation /hbnb_static {\
-                \n\t\talias /data/web_static/current/;\
-                \n\t\ttry_files \$uri \$uri/ =404;\
-        \n\t}\
-\n}"
-
-#sudo sed -i '/server_name _;/a location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
-echo -e "$server" > boegaderrick.tech.conf
-sudo mv boegaderrick.tech.conf /etc/nginx/conf.d/
+sudo sed -i '/server_name _;/a location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 sudo service nginx restart
