@@ -29,7 +29,7 @@ sudo chown -R ubuntu:ubuntu /data
 
 #Server block definition
 server="server {\
-        \n\tlisten localhost:80;\
+        \n\tlisten 80;\
         \n\tserver_name boegaderrick.tech;\
 
         \n\n\tlocation /hbnb_static {\
@@ -38,6 +38,7 @@ server="server {\
         \n\t}\
 \n}"
 
-echo -e "$server" > boegaderrick.tech.conf
-sudo mv boegaderrick.tech.conf /etc/nginx/conf.d/
+sudo sed -i '/listen 80 default_server;/a location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
+#echo -e "$server" > boegaderrick.tech.conf
+#sudo mv boegaderrick.tech.conf /etc/nginx/conf.d/
 sudo service nginx restart
