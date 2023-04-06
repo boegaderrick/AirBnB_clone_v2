@@ -40,5 +40,5 @@ sudo chown -R ubuntu:ubuntu /data
 #echo -e "$server" > boegaderrick.tech.conf
 #sudo mv boegaderrick.tech.conf /etc/nginx/conf.d/
 
-sudo sed -i '/server_name _;/a location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
+sudo sed -i '24i location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 sudo service nginx restart
