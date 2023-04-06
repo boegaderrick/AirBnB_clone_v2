@@ -29,7 +29,7 @@ sudo chown -R ubuntu:ubuntu /data
 
 Server block definition
 server="server {\
-        \n\tlisten 80;\
+        \n\tlisten localhost:80;\
         \n\tserver_name boegaderrick.tech;\
 
         \n\n\tlocation /hbnb_static {\
