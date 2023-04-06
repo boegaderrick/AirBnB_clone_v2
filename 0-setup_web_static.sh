@@ -28,15 +28,15 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
 
 #Server block definition
-server="server {\
-        \n\tlisten 80;\
-        \n\tserver_name boegaderrick.tech;\
-
-        \n\n\tlocation /hbnb_static {\
-                \n\t\talias /data/web_static/current/;\
-                \n\t\ttry_files \$uri \$uri/ =404;\
-        \n\t}\
-\n}"
+#server="server {\
+#        \n\tlisten 80;\
+#        \n\tserver_name boegaderrick.tech;\
+#
+#        \n\n\tlocation /hbnb_static {\
+#                \n\t\talias /data/web_static/current/;\
+#                \n\t\ttry_files \$uri \$uri/ =404;\
+#        \n\t}\
+#\n}"
 
 sudo sed -i '/listen 80 default_server;/a location /hbnb_static {alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 #echo -e "$server" > boegaderrick.tech.conf
