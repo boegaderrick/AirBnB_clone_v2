@@ -6,7 +6,7 @@
 path=$(which nginx)
 if (( ${#path} == 0 ))
 then
-        sudo apt-get update sudo apt-get install nginx -y
+        sudo apt-get update && sudo apt-get install nginx -y
 fi
 
 #Create directories if not already present
@@ -22,8 +22,7 @@ html="<html>\
         \n\t</body>\
 \n</html>"
 
-#echo -e "$html" > index.html
-echo "hello world" > index.html
+echo -e "$html" > index.html
 sudo mv index.html /data/web_static/releases/test
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
