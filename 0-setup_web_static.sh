@@ -22,7 +22,8 @@ html="<html>\
         \n\t</body>\
 \n</html>"
 
-echo -e "$html" > index.html
+#echo -e "$html" > index.html
+echo "hello world" > index.html
 sudo mv index.html /data/web_static/releases/test
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
