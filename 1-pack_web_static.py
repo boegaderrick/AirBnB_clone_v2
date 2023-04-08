@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """This module contains a fab task"""
-from fabric import Connection, task
+from fabric.api import local
 from datetime import datetime
 
 
-@task
-def do_pack(conn):
+def do_pack():
     """
         This function creates a directory named versions then
         packs the contents of 'web_static' directory to a '.tgz' archive
@@ -17,9 +16,9 @@ def do_pack(conn):
         result object), 'None' is returned in case of failure.
     """
     date = datetime.now().strftime('%Y%m%d%H%M%S')
-    commands = f'mkdir -p versions && cd web_static &&\
-        tar -czvf ../versions/web_static_{date}.tgz *'
-    result = conn.run(commands)
+    commands = 'mkdir -p versions && cd web_static &&\
+        tar -czvf ../versions/web_static_{}.tgz *'.format(date)
+    result = local(commands)
     if result.return_code == 0:
-        return f'versions/web_static_{date}.tgz'
+        return 'versions/web_static_{}.tgz'.format(date)
     return None
