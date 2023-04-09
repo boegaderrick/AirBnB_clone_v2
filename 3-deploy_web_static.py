@@ -67,10 +67,6 @@ def do_deploy(archive_path):
     return True
 
 
-"""do_pack = __import__('1-pack_web_static').do_pack
-do_deploy = __import__('2-do_deploy_web_static').do_deploy"""
-
-
 def deploy():
     """
         This function calls two fuctions that are imported from two separate
@@ -79,7 +75,4 @@ def deploy():
         'do_deploy' is then called and its return value gets returned by this
         function.
     """
-    """archive = do_pack()
-    if archive is None:
-        return False"""
     return do_deploy(do_pack())
