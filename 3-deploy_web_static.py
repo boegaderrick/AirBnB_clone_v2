@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This script compresses html files and deploys them"""
 from fabric.api import run, put, env
-env.hosts = ['web-01.boegaderrick.tech', 'web-02.boegaderrick.tech']
-env.user = 'ubuntu'
+#env.hosts = ['web-01.boegaderrick.tech', 'web-02.boegaderrick.tech']
+#env.user = 'ubuntu'
 do_pack = __import__('1-pack_web_static').do_pack
 do_deploy = __import__('2-do_deploy_web_static').do_deploy
 
