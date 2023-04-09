@@ -14,8 +14,11 @@ def do_clean(number=0):
         the function deletes all but the most recent directory.
     """
     number = int(number) if int(number) > 0 else 1
-    res = local('ls -t versions/', capture=True).stdout.split('\n')[number:]
-
+    loc = local('ls -t versions/', capture=True).stdout.split('\n')[number:]
     for i in res:
-        run('rm -rf /data/web_static/releases/{}'.format(i.replace('.tgz', '')))
         local('rm -f versions/{}'.format(i))
+
+    rem = run('ls -t /data/web_static/releases | grep web_static_').\
+            stdout.split('\n')[number:]
+    for i in rem:
+        run('rm -rf /data/web_static/releases/{}'.format(i))
