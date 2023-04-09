@@ -69,10 +69,11 @@ def do_deploy(archive_path):
 
 def deploy():
     """
-        This function calls two fuctions that are imported from two separate
-        modules at the top of this script.
-        'do_pack' is called first, and its return is passed to 'do_deploy'
-        'do_deploy' is then called and its return value gets returned by this
-        function.
+        This function calls two fuctions at the top of this script.
+        'do_deploy' is called with a call to 'do_pack' as its argument.
+        In simple, 'do_pack' is called then its return is passed as an
+        argument to a call to 'do_deploy'.
+
+        The return value of 'do_deploy' is returned by this function.
     """
     return do_deploy(do_pack())
