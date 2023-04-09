@@ -69,7 +69,7 @@ def do_deploy(archive_path):
 
 def deploy():
     """
-        This function calls two fuctions at the top of this script.
+        This function calls two fuctions defined above.
         'do_deploy' is called with a call to 'do_pack' as its argument.
         In simple, 'do_pack' is called then its return is passed as an
         argument to a call to 'do_deploy'.
