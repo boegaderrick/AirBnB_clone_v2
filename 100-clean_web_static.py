@@ -5,6 +5,7 @@ from fabric.api import local, run, env
 env.hosts = ['web-01.boegaderrick.tech', 'web-02.boegaderrick.tech']
 env.user = 'ubuntu'
 
+
 def do_clean(number=0):
     """
         This function performs a deletion of files in specified local
@@ -19,6 +20,6 @@ def do_clean(number=0):
         local('rm -f versions/{}'.format(i))
 
     rem = run('ls -t /data/web_static/releases | grep web_static_').\
-            stdout.split('\n')[number:]
+        stdout.split('\n')[number:]
     for i in rem:
         run('rm -rf /data/web_static/releases/{}'.format(i))
