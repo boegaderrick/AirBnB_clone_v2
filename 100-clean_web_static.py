@@ -16,7 +16,7 @@ def do_clean(number=0):
     """
     number = int(number) if int(number) > 0 else 1
     loc = local('ls -t versions/', capture=True).stdout.split('\n')[number:]
-    for i in res:
+    for i in loc:
         local('rm -f versions/{}'.format(i))
 
     rem = run('ls -t /data/web_static/releases | grep web_static_').\
