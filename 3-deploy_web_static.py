@@ -15,4 +15,7 @@ def deploy():
         'do_deploy' is then called and its return value gets returned by this
         function.
     """
-    return do_deploy(do_pack())
+    archive = do_pack()
+    if archive is None:
+        return False
+    return do_deploy(archive)
