@@ -9,7 +9,7 @@ class FileStorage:
     __objects = {}
 
     def close(self):
-        """Close method"""
+        """This method calls the reload method"""
         self.reload()
 
     def delete(self, obj=None):
