@@ -29,7 +29,7 @@ class DBStorage:
 
     def close(self):
         """This method discards a session object"""
-        self.__session.close()
+        self.__session.remove()
 
     def new(self, obj):
         """This method adds an object to the database"""
