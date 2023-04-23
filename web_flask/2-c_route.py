@@ -17,7 +17,7 @@ def hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_text(text):
+def text(text):
     """This function takes a variable and displays text containing it"""
     return f'C {escape(text).replace("_", " ")}'
 
