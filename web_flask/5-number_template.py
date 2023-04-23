@@ -31,14 +31,14 @@ def python_text(text):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
-    """This function displays '<value of n> is a number' """
+    """This function displays '<value of n> is a number' if its an int"""
     return '{} is a number'.format(n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
-    """This function displays '<value of n> is a number' """
-    return render_template('5-number.html', Number=n)
+    """This function renders a html template if n is an int"""
+    return render_template('5-number.html', number=n)
 
 
 if __name__ == '__main__':
