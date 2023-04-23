@@ -27,6 +27,10 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    def close(self):
+        """This method discards a session object"""
+        self.__session.close()
+
     def new(self, obj):
         """This method adds an object to the database"""
         self.__session.add(obj)
