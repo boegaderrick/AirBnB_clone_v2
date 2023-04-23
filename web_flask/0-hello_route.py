@@ -8,3 +8,7 @@ app = Flask(__name__)
 def hello():
     """This function displays a text"""
     return 'Hello HBNB!'
+
+
+if __name__ == '__main__':
+    app.run(host='0', port=5000)
