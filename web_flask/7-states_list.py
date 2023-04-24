@@ -18,6 +18,7 @@ def states_list():
 @app.teardown_appcontext
 def teardown(Exception=None):
     """This function closes an sqlalchemy session"""
+    from models import storage
     storage.close()
 
 
