@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This script starts a simple flask web application"""
 from flask import Flask, escape, render_template
-from models import storage
-from models.state import State
+# from models import storage
+# from models.state import State
 app = Flask(__name__)
 
 
