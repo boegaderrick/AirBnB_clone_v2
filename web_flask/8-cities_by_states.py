@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """This script starts a simple flask web application"""
 from flask import Flask, escape, render_template
-from models import storage
-from models.state import State
-from models.city import City
 app = Flask(__name__)
 
 
@@ -25,4 +22,7 @@ def teardown(Exception=None):
 
 
 if __name__ == '__main__':
+    from models import storage
+    from models.state import State
+    from models.city import City
     app.run(host='0.0.0.0', port=5000)
