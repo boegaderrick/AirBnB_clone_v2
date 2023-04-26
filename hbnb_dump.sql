@@ -19,6 +19,7 @@
 -- Table structure for table `amenities`
 --
 
+CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 USE hbnb_dev_db;
 
 DROP TABLE IF EXISTS `amenities`;
